@@ -1,0 +1,26 @@
+{
+  "name": "k8s-operator",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "repository": "https://github.com/kostkams/k8s-operator.git",
+  "author": "kostkams <matthias@kostkams.de>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "eslint": "eslint ./src --ext .ts",
+    "eslint:fix": "eslint ./src --ext .ts --fix",
+    "start": "node ./dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.1",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.28.0",
+    "eslint-config-google": "^0.14.0",
+    "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "@dot-i/k8s-operator": "^1.1.3"
+  }
+}

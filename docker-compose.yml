@@ -1,0 +1,7 @@
+version: '3'
+services:
+  k8s-operator:
+    image: kostkams/k8s-operator:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
