@@ -1,0 +1,10 @@
+node_modules
+k8s
+.dockerignore
+.eslintrc.js
+.gitignore
+LICENSE
+docker-compose.yml
+*.Dockerfile
+yarn.lock
+README.md

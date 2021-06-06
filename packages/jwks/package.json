@@ -1,0 +1,37 @@
+{
+  "name": "@hana/jwks",
+  "version": "0.0.1",
+  "author": "kostkams <matthias@kostkams.de>",
+  "homepage": "https://github.com/kostkams/k8s-operator#readme",
+  "license": "MIT",
+  "main": "lib/jwks.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kostkams/k8s-operator.git"
+  },
+  "dependencies": {
+    "@nestjs/common": "^7.6.17",
+    "@nestjs/core": "^7.6.17",
+    "@nestjs/platform-express": "^7.6.17",
+    "express": "^4.17.1",
+    "node-jose": "^2.0.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.1.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "eslint": "eslint ./src --ext .ts",
+    "eslint:fix": "eslint ./src --ext .ts --fix",
+    "start": "node ./lib/jwks.js"
+  },
+  "devDependencies": {
+    "@types/node-jose": "^1.1.6"
+  }
+}

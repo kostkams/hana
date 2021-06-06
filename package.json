@@ -1,26 +1,31 @@
 {
-  "name": "k8s-operator",
+  "name": "root",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "repository": "https://github.com/kostkams/k8s-operator.git",
+  "repository": "https://github.com/kostkams/hana.git",
   "author": "kostkams <matthias@kostkams.de>",
   "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "build": "tsc",
-    "build:watch": "tsc -w",
-    "eslint": "eslint ./src --ext .ts",
-    "eslint:fix": "eslint ./src --ext .ts --fix",
-    "start": "node ./dist/index.js"
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "build:watch": "lerna run build:watch --parallel",
+    "postbuild": "lerna run postbuild --parallel",
+    "eslint": "lerna run eslint --parallel",
+    "eslint:fix": "lerna run eslint:fix --parallel",
+    "start": "lerna run start"
   },
   "devDependencies": {
     "@types/node": "^15.12.1",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^7.28.0",
     "eslint-config-google": "^0.14.0",
+    "lerna": "^3.22.1",
     "typescript": "^4.3.2"
-  },
-  "dependencies": {
-    "@dot-i/k8s-operator": "^1.1.3"
   }
 }

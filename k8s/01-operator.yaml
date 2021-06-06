@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hana
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: operator
+  namespace: hana
+  labels:
+    app: operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: operator
+  template:
+    metadata:
+      labels:
+        app: operator
+    spec:
+      containers:
+        - name: operator
+          image: kostkams/hana-operator:latest
+          imagePullPolicy: Always
+

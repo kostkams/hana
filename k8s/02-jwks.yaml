@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jwks
+---
+apiVersion: hana.io/v1
+kind: Jwks
+metadata:
+  name: jwks
+  namespace: jwks
+spec:
+  wellKnownPath: '.well-known/jwks.json'

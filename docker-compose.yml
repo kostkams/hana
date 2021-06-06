@@ -1,7 +1,12 @@
 version: '3'
 services:
-  k8s-operator:
-    image: kostkams/k8s-operator:latest
+  operator:
+    image: kostkams/hana-operator:latest
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: operator.Dockerfile
+  jwks:
+    image: kostkams/hana-jwks:latest
+    build:
+      context: .
+      dockerfile: jwks.Dockerfile
