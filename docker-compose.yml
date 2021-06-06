@@ -1,12 +1,12 @@
 version: '3'
 services:
   operator:
-    image: kostkams/hana-operator:latest
+    image: kostkams/hana-operator:dev
     build:
       context: .
       dockerfile: operator.Dockerfile
   jwks:
-    image: kostkams/hana-jwks:latest
+    image: kostkams/hana-jwks:dev
     build:
       context: .
       dockerfile: jwks.Dockerfile

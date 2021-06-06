@@ -6,4 +6,5 @@ export interface JwksCustomResource extends KubernetesObject {
 
 export interface JwksCustomResourceSpec {
     wellKnownPath: string;
+    version: string;
 }

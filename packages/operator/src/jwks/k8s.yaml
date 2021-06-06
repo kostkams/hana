@@ -36,7 +36,7 @@ spec:
             - containerPort: 7777
               name: http
               protocol: TCP
-          image: kostkams/hana-jwks:latest
+          image: kostkams/hana-jwks:VERSION
           imagePullPolicy: Always
           env:
             - name: WELL_KNOWN_PATH

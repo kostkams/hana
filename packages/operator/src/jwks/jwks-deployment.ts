@@ -15,7 +15,7 @@ export const createService = async (k8sApi: CoreV1Api, namespace: string) => {
   await deployService(k8sApi, namespace, service!);
 };
 
-export const createDeployment = async (k8sApi: AppsV1Api, namespace: string, wellKnownPath: string) => {
+export const createDeployment = async (k8sApi: AppsV1Api, namespace: string, wellKnownPath: string, version: string) => {
   console.log('Create JWKS deployment');
 
   const filePath = path.resolve(__dirname, 'k8s.yaml');
@@ -24,7 +24,7 @@ export const createDeployment = async (k8sApi: AppsV1Api, namespace: string, wel
   const specs: KubernetesObject[] = yaml.safeLoadAll(fileContent);
 
   const deployment = specs.find((spec) => spec.kind === 'Deployment');
-  await deployDeployment(k8sApi, namespace, deployment!, wellKnownPath);
+  await deployDeployment(k8sApi, namespace, deployment!, wellKnownPath, version);
 };
 
 export const deleteService = async (k8sApi: CoreV1Api, namespace: string) => {
@@ -82,7 +82,13 @@ const deployService = async (k8sApi: CoreV1Api, namespace: string, service: Kube
     await k8sApi.createNamespacedService(namespace, service);
 };
 
-const deployDeployment = async (k8sApi: AppsV1Api, namespace: string, deployment: V1Deployment, wellKnownPath: string) => {
+const deployDeployment = async (
+  k8sApi: AppsV1Api,
+  namespace: string,
+  deployment: V1Deployment,
+  wellKnownPath: string,
+  version: string
+) => {
   if (await deploymentExists(k8sApi, namespace, deployment)) {
     return;
   }
@@ -92,6 +98,7 @@ const deployDeployment = async (k8sApi: AppsV1Api, namespace: string, deployment
       hana: 'v0.0.1',
     };
     deployment.spec!.template.spec!.containers[0].env![0].value = wellKnownPath;
+    deployment.spec!.template.spec!.containers[0].image = deployment.spec!.template.spec!.containers[0].image!.replace(/VERSION/g, version);
 
     await k8sApi.createNamespacedDeployment(namespace, deployment);
 };

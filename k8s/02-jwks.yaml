@@ -11,3 +11,4 @@ metadata:
   namespace: jwks
 spec:
   wellKnownPath: '.well-known/jwks.json'
+  version: dev

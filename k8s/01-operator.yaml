@@ -23,6 +23,6 @@ spec:
     spec:
       containers:
         - name: operator
-          image: kostkams/hana-operator:latest
+          image: kostkams/hana-operator:dev
           imagePullPolicy: Always
 

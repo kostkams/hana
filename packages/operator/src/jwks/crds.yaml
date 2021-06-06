@@ -22,3 +22,5 @@ spec:
               properties:
                 wellKnownPath:
                   type: string
+                version:
+                  type: string

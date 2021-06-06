@@ -37,7 +37,12 @@ export class JwksOperator extends Operator {
 
     await generateJwksSecret(this.k8sApi, namespace);
     await createService(this.k8sApi, namespace);
-    await createDeployment(this.kubeConfig.makeApiClient(AppsV1Api), namespace, object.spec.wellKnownPath);
+    await createDeployment(
+        this.kubeConfig.makeApiClient(AppsV1Api),
+        namespace,
+        object.spec.wellKnownPath,
+        object.spec.version,
+    );
   }
 
   private async resourceDeleted(e: ResourceEvent) {
