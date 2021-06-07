@@ -1,0 +1,15 @@
+---
+apiVersion: getambassador.io/v2
+kind: Host
+metadata:
+  name: test.de
+  namespace: ambassador
+spec:
+  hostname: "test.de"
+  acmeProvider:
+    authority: https://acme-v02.api.letsencrypt.org/directory
+    email: test@tes.de
+  requestPolicy:
+    insecure:
+      action: Redirect
+      additionalPort: 8080

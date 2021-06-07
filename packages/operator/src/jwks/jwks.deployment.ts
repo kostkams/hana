@@ -4,8 +4,6 @@ import yaml from 'js-yaml';
 import path from 'path';
 
 export const createService = async (k8sApi: CoreV1Api, namespace: string) => {
-  console.log('Create JWKS service');
-
   const filePath = path.resolve(__dirname, 'k8s.yaml');
   const fileContent = fs.readFileSync(filePath, 'utf-8');
 
@@ -16,8 +14,6 @@ export const createService = async (k8sApi: CoreV1Api, namespace: string) => {
 };
 
 export const createDeployment = async (k8sApi: AppsV1Api, namespace: string, wellKnownPath: string, version: string) => {
-  console.log('Create JWKS deployment');
-
   const filePath = path.resolve(__dirname, 'k8s.yaml');
   const fileContent = fs.readFileSync(filePath, 'utf-8');
 
@@ -28,8 +24,6 @@ export const createDeployment = async (k8sApi: AppsV1Api, namespace: string, wel
 };
 
 export const deleteService = async (k8sApi: CoreV1Api, namespace: string) => {
-  console.log('Delete JWKS service');
-
   const filePath = path.resolve(__dirname, 'k8s.yaml');
   const fileContent = fs.readFileSync(filePath, 'utf-8');
 
@@ -40,8 +34,6 @@ export const deleteService = async (k8sApi: CoreV1Api, namespace: string) => {
 };
 
 export const deleteDeployment = async (k8sApi: AppsV1Api, namespace: string) => {
-  console.log('Delete JWKS deployment');
-
   const filePath = path.resolve(__dirname, 'k8s.yaml');
   const fileContent = fs.readFileSync(filePath, 'utf-8');
 
@@ -74,39 +66,45 @@ const deployService = async (k8sApi: CoreV1Api, namespace: string, service: Kube
     return;
   }
 
-    service.metadata!.labels = {
-      ...service.metadata!.labels,
-      hana: 'v0.0.1',
-    };
+  console.log('Create JWKS service');
 
-    await k8sApi.createNamespacedService(namespace, service);
+  service.metadata!.labels = {
+    ...service.metadata!.labels,
+    hana: 'v0.0.1',
+  };
+
+  await k8sApi.createNamespacedService(namespace, service);
 };
 
 const deployDeployment = async (
-  k8sApi: AppsV1Api,
-  namespace: string,
-  deployment: V1Deployment,
-  wellKnownPath: string,
-  version: string
+    k8sApi: AppsV1Api,
+    namespace: string,
+    deployment: V1Deployment,
+    wellKnownPath: string,
+    version: string,
 ) => {
   if (await deploymentExists(k8sApi, namespace, deployment)) {
     return;
   }
 
-    deployment.metadata!.labels = {
-      ...deployment.metadata!.labels,
-      hana: 'v0.0.1',
-    };
-    deployment.spec!.template.spec!.containers[0].env![0].value = wellKnownPath;
-    deployment.spec!.template.spec!.containers[0].image = deployment.spec!.template.spec!.containers[0].image!.replace(/VERSION/g, version);
+  console.log('Create JWKS deployment');
 
-    await k8sApi.createNamespacedDeployment(namespace, deployment);
+  deployment.metadata!.labels = {
+    ...deployment.metadata!.labels,
+    hana: 'v0.0.1',
+  };
+  deployment.spec!.template.spec!.containers[0].env![0].value = wellKnownPath;
+  deployment.spec!.template.spec!.containers[0].image = deployment.spec!.template.spec!.containers[0].image!.replace(/VERSION/g, version);
+
+  await k8sApi.createNamespacedDeployment(namespace, deployment);
 };
 
 const removeService = async (k8sApi: CoreV1Api, namespace: string, service: KubernetesObject) => {
   if (!await serviceExists(k8sApi, namespace, service)) {
     return;
   }
+
+  console.log('Delete JWKS service');
 
   await k8sApi.deleteNamespacedService(service.metadata!.name!, namespace);
 };
@@ -115,6 +113,8 @@ const removeDeployment = async (k8sApi: AppsV1Api, namespace: string, deployment
   if (!await deploymentExists(k8sApi, namespace, deployment)) {
     return;
   }
+
+  console.log('Delete JWKS deployment');
 
   await k8sApi.deleteNamespacedDeployment(deployment.metadata!.name!, namespace);
 };

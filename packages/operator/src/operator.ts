@@ -1,3 +1,4 @@
+import {ambassadorOperator} from './ambassador';
 import {jwksOperator} from './jwks';
 import figlet from 'figlet';
 
@@ -5,6 +6,7 @@ const bootstrap = async () => {
   console.log(figlet.textSync('Hana Operator'.toUpperCase(), {font: 'Standard', horizontalLayout: 'full'}));
 
   const operators = [
+    ambassadorOperator,
     jwksOperator,
   ];
 

@@ -1,0 +1,39 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: ambassadors.hana.io
+spec:
+  group: hana.io
+  names:
+    singular: ambassador
+    plural: ambassadors
+    kind: Ambassador
+  scope: Namespaced
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                tls:
+                  type: object
+                  properties:
+                    spec:
+                      type: object
+                      properties:
+                        publicHostname:
+                          type: string
+                        email:
+                          type: string
+                      required:
+                        - publicHostname
+                        - email
+                  required:
+                    - spec
+          required:
+            - spec

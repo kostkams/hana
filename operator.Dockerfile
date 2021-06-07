@@ -18,6 +18,7 @@ COPY ./packages/operator/src ./packages/operator/src
 FROM source AS build
 RUN yarn build
 RUN yarn postbuild
+COPY ./packages/operator/src/ambassador/from-get-ambassador.io/*.yaml ./packages/operator/lib/ambassador/from-get-ambassador.io
 
 FROM node:12-alpine
 WORKDIR k8s-operator

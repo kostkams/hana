@@ -2,7 +2,7 @@ import Operator, {ResourceEvent, ResourceEventType} from '@dot-i/k8s-operator';
 import {AppsV1Api} from '@kubernetes/client-node';
 import path from 'path';
 import {JwksCustomResource} from './interfaces';
-import {createDeployment, createService, deleteDeployment, deleteService} from './jwks-deployment';
+import {createDeployment, createService, deleteDeployment, deleteService} from './jwks.deployment';
 import {deleteJwksSecret, generateJwksSecret} from './key-store';
 
 export class JwksOperator extends Operator {
