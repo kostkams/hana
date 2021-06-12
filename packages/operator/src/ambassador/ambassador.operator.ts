@@ -2,6 +2,7 @@ import Operator, {ResourceEvent, ResourceEventType} from '@dot-i/k8s-operator';
 import {ApiextensionsV1beta1Api} from '@kubernetes/client-node';
 import path from 'path';
 import {deleteAes, deleteCrds, deleteUser, deployAes, deployCrds, deployUser} from './from-get-ambassador.io';
+import {deleteConsul, deployConsul} from './from-get-ambassador.io/consul.deployment';
 import {AmbassadorCustomResource} from './interfaces';
 
 export class AmbassadorOperator extends Operator {
@@ -38,6 +39,7 @@ export class AmbassadorOperator extends Operator {
     if (object.spec.tls) {
       await deployUser(this.kubeConfig, object.spec.tls);
     }
+    await deployConsul(this.kubeConfig);
   }
 
   private async resourceDeleted(e: ResourceEvent) {
@@ -46,6 +48,7 @@ export class AmbassadorOperator extends Operator {
       return;
     }
 
+    await deleteConsul(this.kubeConfig);
     await deleteUser(this.kubeConfig);
     await deleteAes(this.kubeConfig);
     await deleteCrds(this.kubeConfig.makeApiClient(ApiextensionsV1beta1Api));

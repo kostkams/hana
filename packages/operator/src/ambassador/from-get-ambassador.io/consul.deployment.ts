@@ -6,16 +6,21 @@ import {deleteCustomResource} from '../../helper/delete';
 import {deployCustomResource} from '../../helper/deploy';
 import {CustomResource} from '../../interface/custom-resource';
 
-export const deployAes = async (kubeConfig: KubeConfig) => {
-  await deployCustomResource('aes', kubeConfig, load());
+export const deployConsul = async (kubeConfig: KubeConfig) => {
+  const items = load();
+
+  await deployCustomResource('consul', kubeConfig, items);
 };
 
-export const deleteAes = async (kubeConfig: KubeConfig) => {
-  await deleteCustomResource('aes', kubeConfig, load().reverse());
+export const deleteConsul = async (kubeConfig: KubeConfig) => {
+  const items = load().reverse();
+
+  await deleteCustomResource('consul', kubeConfig, items);
 };
+
 
 const load = (): CustomResource[] => {
-  const filePath = path.resolve(__dirname, '2-aes.yaml');
+  const filePath = path.resolve(__dirname, '4-consul.yaml');
   const fileContent = fs.readFileSync(filePath, 'utf-8');
   return yaml.safeLoadAll(fileContent)
       .map((item) => {
@@ -23,19 +28,19 @@ const load = (): CustomResource[] => {
         const version = 'v2';
 
         switch (item.kind) {
-          case 'RateLimitService':
+          case 'ConsulResolver':
             return {
               item,
               group,
               version,
-              plural: 'ratelimitservices',
+              plural: 'consulresolvers',
             };
-          case 'AuthService':
+          case 'TLSContext':
             return {
               item,
               group,
               version,
-              plural: 'authservices',
+              plural: 'tlscontexts',
             };
           case 'Mapping':
             return {

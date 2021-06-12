@@ -6,13 +6,15 @@ import path from 'path';
 
 export const deployCrds = async (k8sApi: ApiextensionsV1beta1Api) => {
   for (const spec of load()) {
-    console.log(`Deploy ambassador crd '${spec.metadata!.name!}'`);
-    await k8sApi.createCustomResourceDefinition(spec);
+    if (!await exists(k8sApi, spec.metadata!.name!)) {
+      console.log(`Deploy ambassador crd '${spec.metadata!.name!}'`);
+      await k8sApi.createCustomResourceDefinition(spec);
+    }
   }
 };
 
 export const deleteCrds = async (k8sApi: ApiextensionsV1beta1Api) => {
-  for (const spec of load()) {
+  for (const spec of load().reverse()) {
     if (await exists(k8sApi, spec.metadata!.name!)) {
       console.log(`Delete ambassador crd '${spec.metadata!.name!}'`);
       await k8sApi.deleteCustomResourceDefinition(spec.metadata!.name!);

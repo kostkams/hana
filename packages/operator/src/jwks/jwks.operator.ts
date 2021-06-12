@@ -1,8 +1,10 @@
 import Operator, {ResourceEvent, ResourceEventType} from '@dot-i/k8s-operator';
-import {AppsV1Api} from '@kubernetes/client-node';
 import path from 'path';
 import {JwksCustomResource} from './interfaces';
-import {createDeployment, createService, deleteDeployment, deleteService} from './jwks.deployment';
+import {
+  deployJwks,
+  deleteJwks,
+} from './jwks.deployment';
 import {deleteJwksSecret, generateJwksSecret} from './key-store';
 
 export class JwksOperator extends Operator {
@@ -36,13 +38,7 @@ export class JwksOperator extends Operator {
     const namespace = object.metadata!.namespace!;
 
     await generateJwksSecret(this.k8sApi, namespace);
-    await createService(this.k8sApi, namespace);
-    await createDeployment(
-        this.kubeConfig.makeApiClient(AppsV1Api),
-        namespace,
-        object.spec.wellKnownPath,
-        object.spec.version,
-    );
+    await deployJwks(this.kubeConfig, namespace, object.spec.wellKnownPath, object.spec.version);
   }
 
   private async resourceDeleted(e: ResourceEvent) {
@@ -54,7 +50,6 @@ export class JwksOperator extends Operator {
     const namespace = object.metadata!.namespace!;
 
     await deleteJwksSecret(this.k8sApi, object.metadata!.namespace!);
-    await deleteService(this.k8sApi, namespace);
-    await deleteDeployment(this.kubeConfig.makeApiClient(AppsV1Api), namespace);
+    await deleteJwks(this.kubeConfig, namespace);
   }
 }

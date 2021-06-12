@@ -77,12 +77,12 @@ metadata:
 data:
   extra-from-values.json: |-
     {}
-    
+
   central-config.json: |-
     {
       "enable_central_service_config": true
     }
-  
+
   config.json: |-
     {
       "check_update_interval": "0s"
@@ -110,7 +110,7 @@ data:
         "prometheus_retention_time": "1m"
       }
     }
-    
+
   central-config.json: |-
     {
       "enable_central_service_config": true
@@ -128,7 +128,7 @@ data:
                 "envoy_extra_static_clusters_json": "{\"connect_timeout\": \"3.000s\", \"dns_lookup_family\": \"V4_ONLY\", \"lb_policy\": \"ROUND_ROBIN\", \"load_assignment\": { \"cluster_name\": \"otel_9411\", \"endpoints\": [ { \"lb_endpoints\": [ {\"endpoint\": { \"address\": { \"socket_address\": { \"address\": \"otel-collector.monitoring\", \"port_value\": 9411, \"protocol\": \"TCP\" } } } } ] } ] }, \"name\": \"otel_9411\", \"type\": \"STRICT_DNS\" }",
                 "envoy_tracing_json": "{ \"http\": { \"config\": { \"collector_cluster\": \"otel_9411\", \"collector_endpoint\": \"/api/v1/spans\", \"trace_id_128bit\": true }, \"name\": \"envoy.zipkin\" } }"
               }
-              
+
           }
         ]
       }
@@ -148,7 +148,7 @@ metadata:
 rules:
 - apiGroups: ["admissionregistration.k8s.io"]
   resources: ["mutatingwebhookconfigurations"]
-  verbs: 
+  verbs:
     - "get"
     - "list"
     - "watch"
@@ -445,7 +445,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            
+
           command:
             - "/bin/sh"
             - "-ec"
@@ -464,8 +464,6 @@ spec:
                 -datacenter=dc1 \
                 -data-dir=/consul/data \
                 -retry-join="${CONSUL_FULLNAME}-server-0.${CONSUL_FULLNAME}-server.${NAMESPACE}.svc:8301" \
-                -retry-join="${CONSUL_FULLNAME}-server-1.${CONSUL_FULLNAME}-server.${NAMESPACE}.svc:8301" \
-                -retry-join="${CONSUL_FULLNAME}-server-2.${CONSUL_FULLNAME}-server.${NAMESPACE}.svc:8301" \
                 -domain=consul
           volumeMounts:
             - name: data
@@ -626,7 +624,7 @@ metadata:
 spec:
   serviceName: consul-consul-server
   podManagementPolicy: Parallel
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: consul
@@ -682,7 +680,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-            
+
           command:
             - "/bin/sh"
             - "-ec"
@@ -692,7 +690,7 @@ spec:
               exec /bin/consul agent \
                 -advertise="${ADVERTISE_IP}" \
                 -bind=0.0.0.0 \
-                -bootstrap-expect=3 \
+                -bootstrap-expect=1 \
                 -client=0.0.0.0 \
                 -config-dir=/consul/config \
                 -datacenter=dc1 \
@@ -701,8 +699,6 @@ spec:
                 -hcl="connect { enabled = true }" \
                 -ui \
                 -retry-join="${CONSUL_FULLNAME}-server-0.${CONSUL_FULLNAME}-server.${NAMESPACE}.svc:8301" \
-                -retry-join="${CONSUL_FULLNAME}-server-1.${CONSUL_FULLNAME}-server.${NAMESPACE}.svc:8301" \
-                -retry-join="${CONSUL_FULLNAME}-server-2.${CONSUL_FULLNAME}-server.${NAMESPACE}.svc:8301" \
                 -serf-lan-port=8301 \
                 -server
           volumeMounts:

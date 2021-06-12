@@ -1,3 +1,4 @@
+
 import {Controller, Get} from '@nestjs/common';
 import {JwksService} from './jwks.service';
 
@@ -6,7 +7,7 @@ export class JwksController {
   constructor(private readonly service: JwksService) {
   }
 
-  @Get(process.env.WELL_KNOWN_PATH)
+  @Get('')
   async jwks() {
     return this.service.getPublicJwks();
   }

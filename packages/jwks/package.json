@@ -16,9 +16,11 @@
     "url": "git+https://github.com/kostkams/k8s-operator.git"
   },
   "dependencies": {
+    "@cloudnative/health-connect": "^2.1.0",
     "@nestjs/common": "^7.6.17",
     "@nestjs/core": "^7.6.17",
     "@nestjs/platform-express": "^7.6.17",
+    "connect": "^3.7.0",
     "express": "^4.17.1",
     "node-jose": "^2.0.0",
     "reflect-metadata": "^0.1.13",
