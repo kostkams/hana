@@ -13,6 +13,10 @@ spec:
       protocol: TCP
       targetPort: 7777
       name: http
+    - port: 443
+      protocol: TCP
+      targetPort: 7443
+      name: https
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -30,13 +34,16 @@ spec:
       labels:
         app: jwks
       annotations:
-        "consul.hashicorp.com/connect-inject": "true"
+        'consul.hashicorp.com/connect-inject': 'true'
     spec:
       containers:
         - name: jwks
           ports:
             - containerPort: 7777
               name: http
+              protocol: TCP
+            - containerPort: 7443
+              name: https
               protocol: TCP
           image: kostkams/hana-jwks:VERSION
           imagePullPolicy: Always
@@ -49,8 +56,25 @@ spec:
                   key: jwks
                   name: jwks
                   optional: false
-            - name: PORT
+            - name: PORT_PUBLIC
               value: '7777'
+            - name: PORT_INTERNAL
+              value: '7443'
+            - name: JWKS_TLS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: tls.key
+                  name: jwks-tls
+            - name: JWKS_TLS_CRT
+              valueFrom:
+                secretKeyRef:
+                  key: tls.crt
+                  name: jwks-tls
+            - name: CA_TLS_CRT
+              valueFrom:
+                secretKeyRef:
+                  key: ca.crt
+                  name: jwks-tls
           readinessProbe:
             httpGet:
               path: /health

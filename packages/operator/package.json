@@ -2,7 +2,7 @@
   "name": "@hana/operator",
   "version": "0.0.1",
   "author": "kostkams <matthias@kostkams.de>",
-  "homepage": "https://github.com/kostkams/k8s-operator#readme",
+  "homepage": "https://github.com/kostkams/hana#readme",
   "license": "MIT",
   "main": "lib/operator.js",
   "directories": {
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kostkams/k8s-operator.git"
+    "url": "git+https://github.com/kostkams/hana.git"
   },
   "dependencies": {
     "@dot-i/k8s-operator": "^1.1.3",

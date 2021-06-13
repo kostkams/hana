@@ -1,10 +1,10 @@
 {
-  "name": "@hana/jwks",
+  "name": "@hana/common",
   "version": "0.0.1",
   "author": "kostkams <matthias@kostkams.de>",
   "homepage": "https://github.com/kostkams/hana#readme",
   "license": "MIT",
-  "main": "lib/jwks.js",
+  "main": "lib/index.js",
   "directories": {
     "lib": "lib"
   },
@@ -16,18 +16,10 @@
     "url": "git+https://github.com/kostkams/hana.git"
   },
   "dependencies": {
-    "@cloudnative/health-connect": "^2.1.0",
-    "@hana/common": "^0.0.1",
     "@nestjs/common": "^7.6.17",
     "@nestjs/core": "^7.6.17",
     "@nestjs/platform-express": "^7.6.17",
-    "class-transformer": "^0.4.0",
-    "class-validator": "^0.13.1",
-    "connect": "^3.7.0",
-    "express": "^4.17.1",
-    "node-jose": "^2.0.0",
-    "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.1.0"
+    "reflect-metadata": "^0.1.13"
   },
   "scripts": {
     "build": "tsc",
@@ -37,6 +29,6 @@
     "start": "node ./lib/jwks.js"
   },
   "devDependencies": {
-    "@types/node-jose": "^1.1.6"
+    "@types/express": "^4.17.12"
   }
 }
