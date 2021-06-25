@@ -25,4 +25,3 @@ spec:
         - name: operator
           image: kostkams/hana-operator:dev
           imagePullPolicy: Always
-

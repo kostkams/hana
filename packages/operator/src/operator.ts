@@ -1,4 +1,5 @@
 import {ambassadorOperator} from './ambassador';
+import {databaseOperator} from './database';
 import {jwksOperator} from './jwks';
 import figlet from 'figlet';
 
@@ -8,6 +9,7 @@ const bootstrap = async () => {
   const operators = [
     ambassadorOperator,
     jwksOperator,
+    databaseOperator,
   ];
 
   await Promise.all(operators.map((operator) => operator.start()));

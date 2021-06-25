@@ -30,6 +30,7 @@ export const createMutualTlsServer = async (module: any): Promise<void> => {
     key: process.env.JWKS_TLS_KEY,
     requestCert: true,
     rejectUnauthorized: !process.env.DEBUG,
+    passphrase: process.env.JWKS_TLS_PWD,
   };
 
   const server = express();
